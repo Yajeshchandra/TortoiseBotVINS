@@ -1,0 +1,57 @@
+ekf_filter_node:
+  ros__parameters:
+    frequency: 30.0  # Hz, update rate
+    sensor_timeout: 0.1
+    two_d_mode: true  # Use this for ground robots to ignore Z-axis
+
+    # Frames
+    map_frame: "map"
+    odom_frame: "odom"
+    base_link_frame: "base_link"
+    world_frame: "map"  # Change to "map" if global localization is needed
+
+    # IMU Sensor
+    imu0: "/imu_plugin/out"
+    imu0_config: [false, false, false,  # Position (x, y, z)
+                  true, true, true,     # Orientation (roll, pitch, yaw)
+                  false, false, false,  # Linear velocity (x, y, z)
+                  false, false, true,   # Angular velocity (x, y, z)
+                  false, false, false]  # Acceleration (x, y, z)
+    imu0_differential: false
+    imu0_relative: true
+    imu0_remove_gravitational_acceleration: true
+
+    # Wheel Odometry
+    odom0: "/odom"
+    odom0_config: [true, true, false,   # Position (x, y, z)
+                   false, false, false, # Orientation (roll, pitch, yaw)
+                   true, true, false,   # Linear velocity (x, y, z)
+                   false, false, true,  # Angular velocity (x, y, z)
+                   false, false, false] # Acceleration (x, y, z)
+    odom0_differential: false
+    odom0_relative: false
+
+    # Visual Odometry
+    vo0: "/vo/odom"
+    vo0_config: [true, true, false,    # Position (x, y, z)
+                 false, false, true,   # Orientation (roll, pitch, yaw)
+                 true, true, false,    # Linear velocity (x, y, z)
+                 false, false, true,   # Angular velocity (x, y, z)
+                 false, false, false]  # Acceleration (x, y, z)
+    vo0_differential: false
+    vo0_relative: false
+
+    # Process noise covariance
+    process_noise_covariance: [0.05, 0, 0, 0, 0, 0,
+                                0, 0.05, 0, 0, 0, 0,
+                                0, 0, 0.01, 0, 0, 0,
+                                0, 0, 0, 0.01, 0, 0,
+                                0, 0, 0, 0, 0.01, 0,
+                                0, 0, 0, 0, 0, 0.01]
+
+    # Output settings
+    publish_tf: true
+    publish_acceleration: false
+    # use_control: true
+    # stamped_control: true
+    # control_config: [true, false, false, false, false, true]
